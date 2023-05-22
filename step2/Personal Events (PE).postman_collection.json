@@ -1,0 +1,804 @@
+{
+	"info": {
+		"_postman_id": "8cefbeb6-7daa-4d4c-bdb6-a72a0b1e6d78",
+		"name": "Personal Events (PE)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25738143"
+	},
+	"item": [
+		{
+			"name": "1 - Events Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"from\": \"2023-05-10T01:00:00+03:00\",\r\n  \"till\": \"2023-05-10T23:00:00+03:00\",\r\n  \"onlyTypes\": [\r\n      \"slot\",\r\n      \"event\"\r\n  ],\r\n  \"statuses\": [\r\n      \"without_status\"\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/events",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - Add PE in future: valid data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"FuturePE\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"StartFuturePE\"\r",
+							"var value = pm.response.json().data.startAt \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"backgroundColor\": \"#EBFDF2\",\r\n  \"color\": \"#EBFDF2\",\r\n  \"description\": \"\",\r\n  \"endAt\": \"2023-05-10T11:30:00+03:00\",\r\n  \"startAt\": \"2023-05-10T10:00:00+03:00\",\r\n  \"title\": \"Йога\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/createPersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - Update title and color for PE in future",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"description\": \"\",\r\n    \"title\": \"Фитнес\",\r\n    \"endAt\": \"2023-05-10T11:30:00+03:00\",\r\n    \"startAt\": \"2023-05-10T10:00:00+03:00\",\r\n    \"id\": {{FuturePE}},\r\n    \"oldStartAt\": \"{{StartFuturePE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/updatePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - Remove PE in future",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{FuturePE}},\r\n    \"startAt\": \"{{StartFuturePE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/removePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 - Add PE in past: valid data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"PastPE\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"StartPastPE\"\r",
+							"var value = pm.response.json().data.startAt \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"backgroundColor\": \"#FFF7C7\",\r\n  \"color\": \"#FAC641\",\r\n  \"description\": \"Report for February was sent to stakeholders\",\r\n  \"endAt\": \"2023-03-01T18:30:00+03:00\",\r\n  \"startAt\": \"2023-03-01T18:00:00+03:00\",\r\n  \"title\": \"Report submitted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/createPersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 - Update desc for PE in past",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"endAt\": \"2023-03-01T18:30:00+03:00\",\r\n    \"startAt\": \"2023-03-01T18:00:00+03:00\",\r\n    \"title\": \"Report submitted\",\r\n    \"description\": \"ex non enim commodo id pariatur eiusmod aliquip exercitation nostrud incididunt deserunt in esse do aliqua consectetur cupidatat tempor consectetur anim anim velit occaecat esse ad amet enim laborum consequat duis voluptate non aute qui quis magna nulla velit amet amet cupidatat deserunt voluptate officia id ullamco laborum irure cillum Lorem do ea excepteur enim excepteur Lorem fugiat laborum ex cillum consequat pariatur amet ad officia adipisicing non proident exercitation labore dolore mollit ipsum proident sint elit eu culpa incididunt labore Lorem reprehenderit cillum aliquip laboris\",\r\n    \"id\": {{PastPE}},\r\n    \"oldStartAt\": \"{{StartPastPE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/updatePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 - Remove PE in past",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{PastPE}},\r\n    \"startAt\": \"{{StartPastPE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/removePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 - Add PE  on dates border: valid data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"FewDaysPE\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"StartFewDaysPE\"\r",
+							"var value = pm.response.json().data.startAt \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"backgroundColor\": \"#F4F5F6\",\r\n  \"color\": \"#81888D\",\r\n  \"description\": \"342я страница\",\r\n  \"endAt\": \"2023-04-13T01:00:00+03:00\",\r\n  \"startAt\": \"2023-04-12T23:30:00+03:00\",\r\n  \"title\": \"Coffee break\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/createPersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 - Modify PE on dates border to several days PE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"Vacation\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"StartVacation\"\r",
+							"var value = pm.response.json().data.startAt \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"#FFF7C7\",\r\n    \"color\": \"#FAC641\",\r\n    \"endAt\": \"2023-04-17T01:00:00+03:00\",\r\n    \"startAt\": \"2023-04-12T23:30:00+03:00\",\r\n    \"title\": \"Отпуск\",\r\n    \"description\": \"Надо отдохнуть подольше\",\r\n    \"id\": {{FewDaysPE}},\r\n    \"oldStartAt\": \"{{StartFewDaysPE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/updatePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - Remove several days PE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{Vacation}},\r\n    \"startAt\": \"{{StartVacation}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/removePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - Add PE w/o required data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"\",\r\n    \"color\": \"\",\r\n    \"description\": \"$$$%\",\r\n    \"startAt\": \"\",\r\n    \"endAt\": \"\",\r\n    \"title\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/createPersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 - Add incorrect PE: invalid data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"IncorrectPE\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"StartIncorrectPE\"\r",
+							"var value = pm.response.json().data.startAt \r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n  \"backgroundColor\": \"#66CDAA\",\r\n  \"color\": \"#7FFFD4\",\r\n  \"description\": \"![photo](https://www.culturepartnership.eu/upload/news/5755d650edb88.jpg)\",\r\n  \"startAt\": \"2023-04-35T01:30:00+03:00\",\r\n  \"endAt\": \"2023-05-05T02:25:00+03:00\",\r\n  \"title\": \"바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바샤바\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/createPersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13 - Remove incorrect PE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{IncorrectPE}},\r\n    \"startAt\": \"{{StartIncorrectPE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/removePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "14  - Remove nonexisting PE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{myToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": {{IncorrectPE}},\r\n    \"startAt\": \"{{StartIncorrectPE}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/{{ver}}/{{tab}}/removePersonal",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"{{ver}}",
+						"{{tab}}",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "myToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "BaseURL",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ver",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "tab",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "FuturePE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartFuturePE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "PastPE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartPastPE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "FewDaysPE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartFewDaysFE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartFewDaysPE",
+			"value": ""
+		},
+		{
+			"key": "Vacation",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartVacation",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "IncorrectPE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "StartIncorrectPE",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
