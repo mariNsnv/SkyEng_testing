@@ -1,6 +1,10 @@
 <i>In this repository you can find my course projects completed during my learning in SkyPro IT university and practice.</i>
 
 <h3>  Project: Testing of a new feature in Skyeng web app for teachers  ("Personal events" functionality)</h3>
+<h4> <a href="https://github.com/mariNsnv/SkyEng_testing/blob/main/pics/skyeng_project_shot.png">View project details</a> </h4>
+
+![Mind map](https://github.com/mariNsnv/SkyEng_testing/blob/main/pics/personalevents_mindmap.png)
+
 <strong><p> Project tasks:</p></strong>
 <ol>
 <li> Test planning </li>
@@ -30,3 +34,4 @@ Regression testing with unavailable requirements/documentation on existing relat
   <strong><p> Challenges & Achievements: </strong></p>
 The existing test documentation base (check lists) was not adapted for further API testing (solution: optimizing the number of cases using pairwise testing and other relevant design techniques).  
 Testing process without available comprehensive technical API documentation (solution: getting information through UI using DevTools).
+
